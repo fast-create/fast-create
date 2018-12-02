@@ -1,7 +1,5 @@
 package com.alibaba.fastcreate.bs;
 
-import static org.junit.Assert.*;
-
 import com.alibaba.fastcreate.BaseBootTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

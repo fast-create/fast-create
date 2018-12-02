@@ -1,8 +1,8 @@
 package com.alibaba.fastcreate.bs;
 
-import com.alibaba.fastcreate.adapter.IExcelAdapter;
 import com.alibaba.fastcreate.adapter.impl.ClazzModelAdapter;
 import com.alibaba.fastcreate.model.ClazzModel;
+import com.alibaba.fastcreate.proxy.CreateProxy;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CreateController {
 
     @Autowired
-    private IExcelAdapter excelAdapter;
+    private CreateProxy createProxy;
     @Autowired
     private ClazzModelAdapter clazzModelAdapter;
 
@@ -25,7 +25,7 @@ public class CreateController {
     public Object create(@RequestParam String inputPath, @RequestParam String out) {
         log.info("== bs.create, inputPath is {}, out is {}", inputPath, out);
         try {
-            List<ClazzModel> clazzModelList = excelAdapter.createExcelOutString(inputPath);
+            List<ClazzModel> clazzModelList = createProxy.createClazzModel(inputPath);
             clazzModelList.forEach(clazzModel -> {
                 try {
                     clazzModelAdapter.createFile(clazzModel, out);

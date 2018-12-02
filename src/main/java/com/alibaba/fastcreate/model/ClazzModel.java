@@ -25,9 +25,7 @@ public class ClazzModel extends BaseModel {
     private String suffixName;
 
     /**
-     * 字段名
-     * key eg.field1
-     * value eg.String
+     * 字段名 key eg.field1 value eg.String
      */
     private Map<String, String> fieldMap;
 

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service("clazzModelAdapter")
 public class ClazzModelAdapter {
@@ -18,10 +19,15 @@ public class ClazzModelAdapter {
 
         sb.append(clazzModel.getAnnotationList().stream().collect(Collectors.joining()));
 
-        sb.append(String.format("public class %s {\n", clazzModel.getClazzName()));
+        sb.append(String.format("public class %s {\n\n", clazzModel.getClazzName()));
 
         clazzModel.getFieldMap().keySet()
-            .forEach(key -> sb.append(String.format("    private %s %s;\n\n", clazzModel.getFieldMap().get(key), key)));
+            .forEach(key -> {
+                if (StringUtils.hasText(clazzModel.getFieldAnnotationMap().get(key))) {
+                    sb.append("    " + clazzModel.getFieldAnnotationMap().get(key) + "\n");
+                }
+                sb.append(String.format("    private %s %s;\n\n", clazzModel.getFieldMap().get(key), key));
+            });
 
         sb.append("}");
 
